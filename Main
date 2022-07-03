@@ -1,0 +1,109 @@
+# Functions
+def is_one_digit(v):
+    if -10 < float(v) < 10 and float(v).is_integer() == True:
+        output = True
+    else:
+        output = False
+    return output
+def check(v1, v2, v3):
+    global end_loop, end_prog
+    msg = ""
+    if is_one_digit(v1) == True and is_one_digit(v2) == True:
+        msg += msg_6
+    if (float(v1) == float(1) or float(v2) == float(1)) and v3 == "*":
+        msg += msg_7
+    if (float(v1) == float(0) or float(v2) == float(0)) and (v3 == "*" or v3 == "+" or v3 == "-"):
+        msg += msg_8
+    if msg != "":
+        msg = msg_9 + msg
+        print(msg)
+def final():
+    global end_loop,  end_prog #ans_2
+    while end_loop == False:
+        print(msg_5)
+        ans_2 = input()
+        if ans_2 == "y":
+            end_loop = True
+        elif ans_2 == "n":
+            end_loop = True
+            end_prog = True
+def end():
+    global end_prog, end_loop, memory #ans_1 
+    print(result)
+    while end_loop == False:
+        print(msg_4)
+        ans_1 = input()
+        if ans_1 == "y":
+            if is_one_digit(result) == True:
+                msg_index = 10
+                ans_3 = "y"
+                while ans_3 == "y":
+                    if msg_index == 10:
+                        new_msg = msg_10
+                    elif msg_index == 11:
+                        new_msg = msg_11
+                    else:
+                        new_msg = msg_12
+                    print(new_msg)
+                    ans_3 = input()
+                    if ans_3 == "y":
+                        if msg_index < 12:
+                            msg_index += 1
+                        else:
+                            ans_3 = "n"
+                            memory = result
+                            final()
+                    elif ans_3 == "n":
+                        final()
+            else:
+                memory = result
+                end_loop = False #####
+                final()
+        elif ans_1 == "n":
+            final()
+# --------------------------------------------------------------------------------------------
+msg_0 = "Enter an equation"
+msg_1 = "Do you even know what numbers are? Stay focused!"
+msg_2 = "Yes ... an interesting math operation. You've slept through all classes, haven't you?"
+msg_3 = "Yeah... division by zero. Smart move..."
+msg_4 = "Do you want to store the result? (y / n):" 
+msg_5 = "Do you want to continue calculations? (y / n):"
+msg_6 = " ... lazy"
+msg_7 = " ... very lazy"
+msg_8 = " ... very, very lazy"
+msg_9 = "You are"
+msg_10 = "Are you sure? It is only one digit! (y / n)"
+msg_11 = "Don't be silly! It's just one number! Add to the memory? (y / n)"
+msg_12 = "Last chance! Do you really want to embarrass yourself? (y / n)"
+memory = float(0)
+end_prog = False
+while end_prog == False:
+    end_loop = False
+    print(msg_0)
+    calc = input()
+    L = calc.split()
+    x, y, oper = L[0], L[2], L[1]
+    if x == "M":
+        x = memory
+    if y == "M":
+        y = memory
+    if str(x)[0].isnumeric() == False or str(y)[0].isnumeric() == False:
+        print(msg_1)
+    elif oper == "+" or oper == "-" or oper == "*" or oper == "/":
+        check(x, y, oper)
+        if oper == "+":
+            result = float(x) + float(y)
+            end()
+        elif oper == "-":
+            result = float(x) - float(y)
+            end()
+        elif oper == "*":
+            result = float(x) * float(y)
+            end()
+        elif  oper == "/" and float(y) != 0:
+            result = float(x) / float(y)
+            end()
+        else:
+            print(msg_3)
+    else:
+        print(msg_2)
